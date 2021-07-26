@@ -1,0 +1,25 @@
+{
+    "name": "aquarius",
+    "displayName": "aquarius-lang",
+    "description": "a funny script",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.58.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "aquarius",
+            "aliases": ["aquarius", "aquarius"],
+            "extensions": [".aqr"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "aquarius",
+            "scopeName": "source.aquarius",
+            "path": "./syntaxes/aquarius.tmLanguage.json"
+        }]
+    }
+}
