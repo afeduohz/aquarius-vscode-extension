@@ -1,8 +1,12 @@
 {
     "name": "aquarius",
     "displayName": "aquarius-lang",
-    "description": "a funny script",
+    "description": "Aquarius language support for Visual Studio Code",
     "version": "0.0.1",
+    "publisher": "DEFA",
+	"author": {
+		"name": "afeduohz"
+	},
     "engines": {
         "vscode": "^1.58.0"
     },
@@ -12,7 +16,7 @@
     "contributes": {
         "languages": [{
             "id": "aquarius",
-            "aliases": ["aquarius", "aquarius"],
+            "aliases": ["Aquarius"],
             "extensions": [".aqr"],
             "configuration": "./language-configuration.json"
         }],

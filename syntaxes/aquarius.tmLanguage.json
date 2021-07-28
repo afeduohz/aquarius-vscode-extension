@@ -3,26 +3,155 @@
 	"name": "aquarius",
 	"patterns": [
 		{
-			"include": "#keywords"
-		},
-		{
-			"include": "#strings"
+			"include": "#statments"
 		}
 	],
 	"repository": {
-		"keywords": {
-			"patterns": [{
-				"name": "keyword.control.aquarius",
-				"match": "\\b(if|while|for|return)\\b"
-			}]
+		"statments": {
+			"patterns": [
+				{
+					"include": "#literals"
+				},
+				{
+					"include": "#keywords"
+				},
+				{
+					"include": "#comment"
+				}
+			]
 		},
-		"strings": {
+		"keywords": {
+			"patterns": [
+				{
+					"name": "keyword.control.aquarius",
+					"match": "\\b(if|eif|else|for|try|catch|finally|break|continue|let|require|as)\\b"
+				}
+			]
+		},
+		"literals": {
+			"patterns": [
+				{
+					"include": "#boolean-literal"
+				},
+				{
+					"include": "#nil-literal"
+				},
+				{
+					"include": "#error-literal"
+				},
+				{
+					"include": "#fn-literal"
+				},
+				{
+					"include": "#array-literal"
+				},
+				{
+					"include": "#numeric-literal"
+				},
+				{
+					"include": "#string-literal"
+				},
+				{
+					"include": "#labmda-literal"
+				}
+			]
+		},
+		"nil-literal": {
+			"name": "constant.language.null.aquarius",
+			"match": "(?<![_$[:alnum:]])(?:(?<=\\.\\.\\.)|(?<!\\.))nil(?![_$[:alnum:]])(?:(?=\\.\\.\\.)|(?!\\.))"
+		},
+		"numeric-literal": {
+			"patterns": [
+				{
+					"name": "constant.language.numeric.aquarius",
+					"match": "(?x)\n(?<!\\$)(?:\n  (?:\\b[0-9][0-9_]*(\\.)[0-9][0-9_]*[eE][+-]?[0-9][0-9_]*(n)?\\b)| # 1.1E+3\n  (?:\\b[0-9][0-9_]*(\\.)[eE][+-]?[0-9][0-9_]*(n)?\\b)|             # 1.E+3\n  (?:\\B(\\.)[0-9][0-9_]*[eE][+-]?[0-9][0-9_]*(n)?\\b)|             # .1E+3\n  (?:\\b[0-9][0-9_]*[eE][+-]?[0-9][0-9_]*(n)?\\b)|                 # 1E+3\n  (?:\\b[0-9][0-9_]*(\\.)[0-9][0-9_]*(n)?\\b)|                      # 1.1\n  (?:\\b[0-9][0-9_]*(\\.)(n)?\\B)|                                  # 1.\n  (?:\\B(\\.)[0-9][0-9_]*(n)?\\b)|                                  # .1\n  (?:\\b[0-9][0-9_]*(n)?\\b(?!\\.))                                 # 1\n)(?!\\$)"
+				}
+			]
+		},
+		"error-literal": {
+			"name": "constant.language.null.aquarius",
+			"match": "(?<![_$[:alnum:]])(?:(?<=\\.\\.\\.)|(?<!\\.))error(?![_$[:alnum:]])(?:(?=\\.\\.\\.)|(?!\\.))"
+		},
+		"fn-literal": {
+			"name": "constant.language.null.aquarius",
+			"match": "(?<![_$[:alnum:]])(?:(?<=\\.\\.\\.)|(?<!\\.))(self|args|lambda)(?![_$[:alnum:]])(?:(?=\\.\\.\\.)|(?!\\.))"
+		},
+		"boolean-literal": {
+			"patterns": [
+				{
+					"name": "constant.language.boolean.true.aquarius",
+					"match": "(?<![_$[:alnum:]])(?:(?<=\\.\\.\\.)|(?<!\\.))true(?![_$[:alnum:]])(?:(?=\\.\\.\\.)|(?!\\.))"
+				},
+				{
+					"name": "constant.language.boolean.false.aquarius",
+					"match": "(?<![_$[:alnum:]])(?:(?<=\\.\\.\\.)|(?<!\\.))false(?![_$[:alnum:]])(?:(?=\\.\\.\\.)|(?!\\.))"
+				}
+			]
+		},
+		"array-literal": {
+			"name": "meta.array.literal.aquarius",
+			"begin": "\\s*(\\[)",
+			"beginCaptures": {
+				"1": {
+					"name": "meta.brace.square.aquarius"
+				}
+			},
+			"end": "\\]",
+			"endCaptures": {
+				"0": {
+					"name": "meta.brace.square.aquarius"
+				}
+			},
+			"patterns": [
+				{
+					"include": "#statments"
+				}
+			]
+		},
+		"string-literal": {
 			"name": "string.quoted.double.aquarius",
 			"begin": "\"",
 			"end": "\"",
 			"patterns": [
 				{
 					"name": "constant.character.escape.aquarius",
+					"match": "\\\\."
+				}
+			]
+		},
+		"labmda-literal": {
+			"name": "meta.function.aquarius",
+			"begin": "\\(\\s+\\|\\\\.\\|(\\\\.)",
+			"end": "\\)"
+		},
+		"comment": {
+			"patterns": [
+				{
+					"name": "comment.block.documentation.aquarius",
+					"begin": "#(?!#)",
+					"beginCaptures": {
+						"0": {
+							"name": "punctuation.definition.comment.aquarius"
+						}
+					},
+					"end": "#",
+					"endCaptures": {
+						"0": {
+							"name": "punctuation.definition.comment.aquarius"
+						}
+					},
+					"patterns": [
+						{
+							"include": "#docblock"
+						}
+					]
+				}
+			]
+		},
+		"docblock": {
+			"patterns": [
+				{
+					"name": "comment.block.documentation.aquarius",
 					"match": "\\\\."
 				}
 			]
